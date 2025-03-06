@@ -6,6 +6,7 @@ import androidx.compose.runtime.Stable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import at.marcneureiter.kotlin.coroutines.modeling.lib.permission.PermissionManager
+import at.marcneureiter.kotlin.coroutines.modeling.lib.runActivity.implementation.ActivityRunners
 import at.marcneureiter.kotlin.coroutines.modeling.lib.runActivity.implementation.AppSettingsRunner
 import at.marcneureiter.kotlin.coroutines.modeling.lib.runActivity.implementation.PickVisualMediaRunner
 import at.marcneureiter.kotlin.coroutines.modeling.lib.runActivity.implementation.PickVisualMediaType
@@ -28,18 +29,12 @@ class MainViewModel : ViewModel() {
     private lateinit var permissionManager: PermissionManager
     private lateinit var appSettingsRunner: AppSettingsRunner
 
-    fun init(
-        pickVisualMediaRunner: PickVisualMediaRunner,
-        requestPermissionRunner: RequestPermissionRunner,
-        takePictureRunner: TakePictureRunner,
-        permissionManager: PermissionManager,
-        appSettingsRunner: AppSettingsRunner
-    ) {
-        this.pickVisualMediaRunner = pickVisualMediaRunner
-        this.requestPermissionRunner = requestPermissionRunner
-        this.takePictureRunner = takePictureRunner
+    fun init(activityRunners: ActivityRunners, permissionManager: PermissionManager) {
+        this.pickVisualMediaRunner = activityRunners.pickVisualMedia
+        this.requestPermissionRunner = activityRunners.requestPermissionRunner
+        this.takePictureRunner = activityRunners.takePictureRunner
+        this.appSettingsRunner = activityRunners.appSettingsRunner
         this.permissionManager = permissionManager
-        this.appSettingsRunner = appSettingsRunner
     }
 
     fun takePicture() {

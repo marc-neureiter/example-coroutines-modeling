@@ -18,10 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.lifecycle.viewmodel.compose.viewModel
 import at.marcneureiter.kotlin.coroutines.modeling.lib.permission.rememberPermissionManager
-import at.marcneureiter.kotlin.coroutines.modeling.lib.runActivity.implementation.rememberAppSettingsRunner
-import at.marcneureiter.kotlin.coroutines.modeling.lib.runActivity.implementation.rememberPickVisualMediaRunner
-import at.marcneureiter.kotlin.coroutines.modeling.lib.runActivity.implementation.rememberRequestPermissionRunner
-import at.marcneureiter.kotlin.coroutines.modeling.lib.runActivity.implementation.rememberTakePictureRunner
+import at.marcneureiter.kotlin.coroutines.modeling.lib.runActivity.implementation.rememberActivityRunners
 import at.marcneureiter.kotlin.coroutines.modeling.ui.theme.CoroutinesModelingTheme
 
 class MainActivity : ComponentActivity() {
@@ -59,20 +56,11 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
-            val pickVisualMediaRunner = rememberPickVisualMediaRunner()
-            val requestPermissionRunner = rememberRequestPermissionRunner()
-            val takePictureRunner = rememberTakePictureRunner()
+            val activityRunners = rememberActivityRunners()
             val permissionManager = rememberPermissionManager()
-            val appSettingsRunner = rememberAppSettingsRunner()
 
             LaunchedEffect(Unit) {
-                viewModel.init(
-                    pickVisualMediaRunner,
-                    requestPermissionRunner,
-                    takePictureRunner,
-                    permissionManager,
-                    appSettingsRunner
-                )
+                viewModel.init(activityRunners, permissionManager)
             }
         }
     }
